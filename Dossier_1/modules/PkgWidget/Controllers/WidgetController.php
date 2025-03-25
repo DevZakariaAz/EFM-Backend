@@ -2,10 +2,12 @@
 
 namespace Modules\PkgWidget\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Modules\PkgWidget\App\Requests\StoreWidgetRequest;
+use Modules\PkgWidget\App\Requests\UpdateWidgetRequest;
 use Modules\PkgWidget\App\Services\WidgetService;
-use Exception;  // Import the Exception class
+use Modules\PkgWidget\Models\Widget;
 
 class WidgetController extends Controller
 {
@@ -16,29 +18,63 @@ class WidgetController extends Controller
         $this->widgetService = $widgetService;
     }
 
-    /**
-     * Show the test form.
-     */
-    public function test()
+    public function index()
     {
-        return view('PkgWidget::test');
+        $widgets = $this->widgetService->getWidgets();
+        return view('PkgWidget::test', compact('widgets'));
     }
 
-    /**
-     * Execute the method provided in the form using the service.
-     */
     public function execute(Request $request)
     {
-        $methodName = $request->input('method_name');
+        $method = $request->input('method_name');
 
-        try {
-            // Attempt to dynamically call the method in the service
-            $data = $this->widgetService->dynamicCall($methodName);
-            return view('PkgWidget::dashboard', $data);
-            
-        } catch (Exception $e) {
-            \Log::error('Error executing method: ' . $e->getMessage());
-            return view('PkgWidget::error', ['error' => 'An error occurred while processing your request.']);
-        }
+        $result = $this->widgetService->executeMethod($method);
+
+        return view('PkgWidget::test', compact('result'));
+    }
+
+    public function create()
+    {
+        return view('PkgWidget::create');
+    }
+
+    public function store(StoreWidgetRequest $request)
+    {
+
+        $validated = $request->validated();
+        $this->widgetService->createWidget($validated);
+
+        return redirect()->route('index');
+    }
+
+    public function show(string $id)
+    {
+        $widget = $this->widgetService->getWidgetById($id);
+
+        return view('PkgWidget::show', compact('widget'));
+    }
+
+    public function edit($id)
+    {
+        $widget = Widget::findOrFail($id);
+
+        return view('PkgWidget::edit', compact('widget'));
+    }
+
+    public function update(UpdateWidgetRequest $request, $id)
+    {
+        $validated = $request->validated();
+        $widgets = Widget::findOrFail($id);
+        $this->widgetService->updateWidget($widgets, $validated);
+
+        return redirect()->route('index');
+    }
+
+    public function destroy(string $id)
+    {
+        $widget = Widget::findOrFail($id);
+        $this->widgetService->deleteWidget($widget);
+
+        return redirect()->route('index');
     }
 }

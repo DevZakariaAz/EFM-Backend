@@ -2,52 +2,81 @@
 
 namespace Modules\PkgWidget\App\Services;
 
+use Exception;
+use Modules\PkgWidget\Models\Apprenant;
+use Modules\PkgWidget\Models\Widget;
+
 class WidgetService
 {
-    // Existing service methods...
-
     public function getNombreApprenant()
     {
-        // Example method returning data
+        $count = Apprenant::count();
         return [
-            'title' => 'Nombre d\'Apprenants',
-            'value' => 42,
+            'title' => 'Number of Learners',
+            'value' => $count
         ];
     }
 
     public function getApprenantsActifs()
     {
-        // Example method returning data
-        $learners = ['Alice', 'Bob', 'Charlie', 'David', 'Eve'];
+        $activeApprenants = Apprenant::where('is_active', true)->pluck('name')->toArray();
         return [
-            'title' => 'Apprenants Actifs',
-            'list'  => $learners,
-            'total' => count($learners),
+            'title' => 'Active Learners',
+            'list' => $activeApprenants,
+            'total' => count($activeApprenants)
         ];
     }
 
-    /**
-     * Dynamically execute a method by name.
-     *
-     * @param string $methodName
-     * @return array An array with either 'result' or 'error' key.
-     */
-    public function dynamicCall(string $methodName): array
+    public function executeMethod($method)
     {
         try {
-            // Check if the method exists in this service.
-            if (!method_exists($this, $methodName)) {
-                throw new \Exception("The method '{$methodName}' does not exist in WidgetService.");
+            if (method_exists($this, $method)) {
+                return call_user_func([$this, $method]); 
+            } else {
+                throw new Exception("Method '$method' not found in WidgetService.");
             }
-
-            // Dynamically call the method.
-            $result = call_user_func([$this, $methodName]);
-
-            // Return the result wrapped in a 'result' key.
-            return ['result' => $result];
-        } catch (\Exception $e) {
-            // Return the error message wrapped in an 'error' key.
-            return ['error' => $e->getMessage()];
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()]; 
         }
+    }
+
+    public function getWidgets()
+    {
+        $widgets = Widget::all();
+        return $widgets;
+    }
+
+    public function getWidgetById($id)
+    {
+        return Widget::findOrFail($id);
+    }
+
+    public function createWidget(array $data)
+    {
+        $widget = Widget::create([
+            'name' => $data['name'],
+            'method' => $data['method'],
+            'type' => $data['type'],
+        ]);
+
+        return $widget;
+    }
+
+    public function updateWidget(Widget $widget, array $data)
+    {
+
+        $widget->update([
+            'name' => $data['name'],
+            'method' => $data['method'],
+            'type' => $data['type'],
+        ]);
+
+        return $widget;
+    }
+
+    public function deleteWidget(Widget $widget)
+    {
+        $widget->delete();
+        return true;
     }
 }
