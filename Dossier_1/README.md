@@ -1,179 +1,66 @@
-Below is the translated text:
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
----
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-# 🧪 **Laravel Test – Day 1: Development of a Dynamic Module**
+## About Laravel
 
-## 🧩 **General Context**
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-You are tasked with developing an **autonomous Laravel module** named `PkgWidget`, located in the `modules/` directory, following a custom modular architecture.
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-This module should enable you to:
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
--   Manage **dynamic widgets** on a dashboard
--   Associate each widget with a **business logic method** contained in a Service class
--   Dynamically execute these methods and display their result as a widget (value or list)
+## Learning Laravel
 
-Your development must comply with **Laravel standards** and follow the structure below:
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-### 📦 Expected Module Structure:
+You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-```
-modules/
-└── PkgWidget/
-    ├── Controllers/
-    ├── Models/
-    ├── Views/
-    ├── App/
-    │   ├── Services/
-    │   └── Requests/
-    └── lang/
-```
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-The module must be **declared via a custom Service Provider**.
+## Laravel Sponsors
 
----
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-## ❗️**Access Condition for the Rest of the Test**
+### Premium Partners
 
-🔒 **Question 1** (Prototype) is **eliminatory**:
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[WebReinvent](https://webreinvent.com/)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+- **[Jump24](https://jump24.co.uk)**
+- **[Redberry](https://redberry.international/laravel/)**
+- **[Active Logic](https://activelogic.com)**
+- **[byte5](https://byte5.de)**
+- **[OP.GG](https://op.gg)**
 
--   If you score **at least 4/5**, you can move on to Folders 2 and 3. The final grade will be based on **40 points**.
--   If you score **less than 4/5**, you will have to **change the topic** for a new test.
-    -   The score obtained for question 1 is kept (out of 5)
-    -   The other parts will be **graded out of 35 points** with a new theme.
+## Contributing
 
-📌 Folders 2 and 3 are carried out as **live coding**, in the presence of an evaluating trainer.
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
----
+## Code of Conduct
 
-# 📁 **Folder 1 – Functional Prototype (Modular)**
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-📖 _Documentation allowed_
+## Security Vulnerabilities
 
-### 🧮 Maximum Score: 5 points
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-### ⏱️ Duration: 45 minutes
+## License
 
-### 🎯 Objective:
-
-Create a simple prototype in the `PkgWidget` module, demonstrating your ability to **dynamically execute a method** from a Service class, based on user input.
-
-### 🔹 Questions to Address:
-
-#### Q1.1 – Create a class `WidgetService` in `App/Services/` containing two public methods:
-
--   `getNombreApprenant()` → returns an array or an object with a title and a value
--   `getApprenantsActifs()` → returns a title, a list of 5 learners, and the total count
-    **(0.5 pt)**
-
-#### Q1.2 – Create a test page in `Views/`, containing a form with a field `method_name` (name of the method to execute)
-
-**(0.5 pt)**
-
-#### Q1.3 – Dynamically call the method via `call_user_func` in a module controller, and display the result
-
-**(1.5 pt)**
-
-#### Q1.4 – Handle errors with a `try/catch` block, and display a message if the method does not exist
-
-**(1 pt)**
-
-#### Q1.5 – Clearly display the widgets according to their type (value or list)
-
-**(1.5 pt)**
-
----
-
-# 📁 **Folder 2 – One Page CRUD**
-
-### 🧮 Maximum Score: 15 points
-
-### ⏱️ Duration: 1 hour
-
-### 🎯 Objective:
-
-Continue the work started in Folder 1 (branch `Dossier-2`) by implementing a **One Page CRUD** to manage the widgets in the `PkgWidget` module.
-
-### 🔹 Questions to Address:
-
-#### Q2.1 – Create the `Widget` model in `Models/` with an appropriate migration (`name`, `method`, `type`, etc.)
-
-**(2 pts)**
-
-#### Q2.2 – Implement CRUD actions in a module controller (`Controllers/`)
-
-**(5 pts)**
-
-#### Q2.3 – Use **modals** for the creation, editing, and deletion forms, without reloading the page
-
-**(4 pts)**
-
-#### Q2.4 – Create a class `WidgetRequest` in `App/Requests/` to validate the data:
-
--   The `method` field is required
--   The `type` field must be equal to `"number"` or `"list"`
-    **(2 pts)**
-
-#### Q2.5 – Translate the labels (`name`, `method`, `type`) and the error messages in the files `lang/en/widget.php` and `lang/fr/widget.php`
-
-**(2 pts)**
-
----
-
-# 📁 **Folder 3 – Dynamic Dashboard**
-
-### 🧮 Maximum Score: 20 points
-
-### ⏱️ Duration: 1h30
-
-### 🎯 Objective:
-
-Dynamically display the widgets in a dashboard by calling the **business methods of the `WidgetService` class**.
-
-### 🔹 Questions to Address:
-
-#### Q3.1 – Add an additional business method in `WidgetService`:
-
--   `getNombreApprenantsParNomFamille()` → returns a title + a list containing the number of learners for each last name
-    **(2 pts)**
-
-#### Q3.2 – When creating a widget, allow the user to input:
-
--   The name of the method
--   The type of widget (`number` or `list`)
-    **(3 pts)**
-
-#### Q3.3 – In the dashboard, dynamically execute the method associated with each widget
-
-**(4 pts)**
-
-#### Q3.4 – Properly display the results:
-
--   Widgets of type `number` in a **card**
--   Widgets of type `list` in a **styled list or an HTML table**
-    **(5 pts)**
-
-#### Q3.5 – Properly handle execution errors (e.g., non-existent method) without breaking the display
-
-**(3 pts)**
-
-#### Q3.6 – Evaluate the quality of the code:
-
--   Good separation of concerns (controller / service / view)
--   Clear and structured naming of classes, methods, and variables
--   The possible presence of useful comments
-    **(3 pts)**
-
----
-
-## ✅ **Summary of Scores**
-
-| Folder    | Description                             | Score   |
-| --------- | --------------------------------------- | ------- |
-| Folder 1  | Functional Prototype (access condition) | /5      |
-| Folder 2  | One Page CRUD in the module             | /15     |
-| Folder 3  | Dynamic Dashboard (Service + View)      | /20     |
-| **Total** |                                         | **/40** |
-
----
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
